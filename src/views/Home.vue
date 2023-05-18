@@ -45,7 +45,9 @@
                           style="width: 4rem;"
                           class="mr-2"
                         />
-                        <span style="font-size: 1.5rem;">Ещё чуть-чуть! 🌟</span>
+                        <span style="font-size: 1.5rem;"
+                          >Ещё чуть-чуть! 🌟</span
+                        >
                       </div>
                     </div>
                     <div
@@ -122,12 +124,15 @@
               </b-col>
             </b-row>
             <b-col>
-              <div class="box height45">
-                <b-col
-                  class="modCards d-flex justify-content-lg-left justify-content-lg-between  "
-                >
+              <div>
+                <div>
                   <!-- Start todo -->
-                  <div id="app">
+                  <vue-draggable-resizable
+                    w="auto"
+                    h="auto"
+                    :resizable="false"
+                    id="app"
+                  >
                     <section class="todo-wrapper mr-3">
                       <h1 class="todo-title">
                         Список дел
@@ -152,11 +157,13 @@
 
                       <div v-if="pending.length > 0">
                         <p class="status busy">
-                           У Вас {{ pending.length }}<span
-                            v-if="pending.length > 1"
-                            > отложеных дела</span
+                          У Вас {{ pending.length
+                          }}<span v-if="pending.length > 1">
+                            отложеных дела</span
                           >
-                          <span v-if="pending.length === 1"> отложенное дело</span>
+                          <span v-if="pending.length === 1">
+                            отложенное дело</span
+                          >
                         </p>
                         <transition-group
                           name="todo-item"
@@ -222,7 +229,8 @@
                           @click="toggleShowComplete"
                         >
                           <span v-if="!showComplete">Показать</span
-                          ><span v-else>Скрыть</span> завершенные
+                          ><span v-else>Скрыть</span>
+                          завершенные
                         </div>
                         <div
                           class="btnn btnn-secondary"
@@ -233,11 +241,15 @@
                         </div>
                       </div>
                     </section>
-                  </div>
+                  </vue-draggable-resizable>
                   <!-- End todo-->
-                  <Important />
-                  <Meeting />
-                </b-col>
+                  <vue-draggable-resizable :resizable="false" w="auto" h="auto"
+                    ><Important
+                  /></vue-draggable-resizable>
+                  <vue-draggable-resizable :resizable="false" w="auto" h="auto"
+                    ><Meeting
+                  /></vue-draggable-resizable>
+                </div>
               </div>
             </b-col>
           </b-row>
@@ -245,23 +257,24 @@
         <b-col sm="12" md="12" lg="12" xl="3" cols="12">
           <div class="box mt-3" id="schedule">
             <div class="d-flex align-items-center flex-column">
-              <h4 class="particletext mb-4 text-center">Направление<br>и<br>изучаемые дисциплины ✏️</h4>
+              <h4 class="particletext mb-4 text-center">
+                Направление<br />и<br />изучаемые дисциплины ✏️
+              </h4>
               <ModuleCard
                 v-for="mod in modules"
                 :key="mod"
                 v-bind:moduleFullName="mod"
               />
               <ModuleCard
-                  v-for="less in sub"
-                  :key="less"
-                  v-bind:groupes="mod"
-                />
+                v-for="less in sub"
+                :key="less"
+                v-bind:groupes="mod"
+              />
             </div>
           </div>
         </b-col>
       </b-row>
     </div>
-    
   </div>
 </template>
 
@@ -272,15 +285,16 @@ import ModuleCard from "@/components/ModuleCard";
 import Navbar from "@/components/Navbar";
 import QuoteBar from "@/components/QuoteBar";
 import Schedule from "@/components/Schedule";
-
 import $ from "jquery";
-
+import VueDraggableResizable from "vue-draggable-resizable";
+import "vue-draggable-resizable/dist/VueDraggableResizable.css";
 require("@/assets/styles/particles.css");
 require("@/assets/styles/todo.css");
 
 export default {
   name: "Home",
   components: {
+    VueDraggableResizable,
     Navbar,
     QuoteBar,
     ModuleCard,
@@ -504,7 +518,7 @@ export default {
     this.modules = window.localStorage.getItem("modules");
     this.modules = this.modules.split(",");
     console.log(this.modules);
-    
+
     if (window.localStorage) {
       if (!localStorage.getItem("firstReLoad")) {
         localStorage["firstReLoad"] = true;
@@ -660,5 +674,8 @@ p {
 
 .trans {
   background: transparent;
+}
+.vdr {
+  border: none !important;
 }
 </style>

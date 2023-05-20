@@ -125,15 +125,15 @@
             </b-row>
             <b-col>
               <div>
-                <div>
+                <div class="whiteboard">
                   <!-- Start todo -->
                   <vue-draggable-resizable
                     w="auto"
                     h="auto"
-                    :resizable="false"
+                    :resizable="true"
                     id="app"
                   >
-                    <section class="todo-wrapper mr-3">
+                    <section class="todo-wrapper mr-3 cont">
                       <h1 class="todo-title">
                         Список дел
                       </h1>
@@ -243,10 +243,15 @@
                     </section>
                   </vue-draggable-resizable>
                   <!-- End todo-->
-                  <vue-draggable-resizable :resizable="false" w="auto" h="auto"
+                  <vue-draggable-resizable :resizable="true" w="auto" h="auto"
                     ><Important
                   /></vue-draggable-resizable>
-                  <vue-draggable-resizable :resizable="false" w="auto" h="auto"
+                  <vue-draggable-resizable
+                    :resizable="true"
+                    w="auto"
+                    h="auto"
+                    :x="x"
+                    :on-drag="onDragCallback"
                     ><Meeting
                   /></vue-draggable-resizable>
                 </div>
@@ -349,6 +354,12 @@ export default {
     },
     clearAll() {
       this.newList = [];
+    },
+    onDragCallback(x, y) {
+      console.log(this.x);
+      if (x > 100 && x < 400 && y > 100 && y < 400) {
+        return false;
+      }
     }
   },
   computed: {
@@ -574,6 +585,9 @@ body {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   overflow: auto;
 }
+.cont {
+  height: 95% !important;
+}
 
 .modCards {
   overflow-y: auto;
@@ -675,7 +689,14 @@ p {
 .trans {
   background: transparent;
 }
+
+.whiteboard {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .vdr {
   border: none !important;
+  position: relative !important;
 }
 </style>

@@ -123,140 +123,139 @@
                 </div>
               </b-col>
             </b-row>
-            <b-col>
-              <div>
-                <div class="whiteboard">
-                  <!-- Start todo -->
-                  <vue-draggable-resizable
-                    w="auto"
-                    h="auto"
-                    :resizable="true"
-                    id="app"
-                  >
-                    <section class="todo-wrapper mr-3 cont">
-                      <h1 class="todo-title">
-                        Список дел
-                      </h1>
-                      <form @keydown.enter.prevent="">
-                        <input
-                          type="text"
-                          class="input-todo"
-                          v-bind:class="{ active: new_item }"
-                          placeholder="Дз поделать, что ли..."
-                          v-model="new_item"
-                          v-on:keyup.enter="addItem"
-                        />
-                        <div
-                          class="btnn btnn-add"
-                          v-bind:class="{ active: new_item }"
-                          @click="addItem"
-                        >
-                          +
-                        </div>
-                      </form>
 
-                      <div v-if="pending.length > 0">
-                        <p class="status busy">
-                          У Вас {{ pending.length
-                          }}<span v-if="pending.length > 1">
-                            отложеных дела</span
-                          >
-                          <span v-if="pending.length === 1">
-                            отложенное дело</span
-                          >
-                        </p>
-                        <transition-group
-                          name="todo-item"
-                          tag="ul"
-                          class="todo-list"
-                        >
-                          <li v-for="item in pending" v-bind:key="item.title">
-                            <input
-                              class="todo-checkbox"
-                              v-bind:id="'item_' + item.id"
-                              v-model="item.done"
-                              type="checkbox"
-                              @click="addTaskDone"
-                            />
-                            <label v-bind:for="'item_' + item.id"></label>
-                            <span class="todo-text">{{ item.title }}</span>
-                            <span
-                              class="deleteT"
-                              @click="deleteItem(item)"
-                            ></span>
-                          </li>
-                        </transition-group>
+            <div>
+              <div class="whiteboard">
+                <vue-draggable-resizable
+                  parent
+                  w="350"
+                  h="400"
+                  :max-height="400"
+                  :resizable="true"
+                  id="app"
+                >
+                  <section class="todo-wrapper mr-3 cont">
+                    <h1 class="todo-title">
+                      Список дел
+                    </h1>
+                    <form @keydown.enter.prevent="">
+                      <input
+                        type="text"
+                        class="input-todo"
+                        v-bind:class="{ active: new_item }"
+                        placeholder="Дз поделать, что ли..."
+                        v-model="new_item"
+                        v-on:keyup.enter="addItem"
+                      />
+                      <div
+                        class="btnn btnn-add"
+                        v-bind:class="{ active: new_item }"
+                        @click="addItem"
+                      >
+                        +
                       </div>
+                    </form>
 
-                      <transition name="slide-fade">
-                        <p class="status free" v-if="!pending.length">
-                          <img
-                            src="https://nourabusoud.github.io/vue-todo-list/images/beer_celebration.svg"
-                            alt="celebration"
-                          />Можно расслабиться! Дел больше нет.
-                        </p>
-                      </transition>
+                    <div v-if="pending.length > 0">
+                      <p class="status busy">
+                        У Вас {{ pending.length
+                        }}<span v-if="pending.length > 1"> отложеных дела</span>
+                        <span v-if="pending.length === 1">
+                          отложенное дело</span
+                        >
+                      </p>
+                      <transition-group
+                        name="todo-item"
+                        tag="ul"
+                        class="todo-list"
+                      >
+                        <li v-for="item in pending" v-bind:key="item.title">
+                          <input
+                            class="todo-checkbox"
+                            v-bind:id="'item_' + item.id"
+                            v-model="item.done"
+                            type="checkbox"
+                            @click="addTaskDone"
+                          />
+                          <label v-bind:for="'item_' + item.id"></label>
+                          <span class="todo-text">{{ item.title }}</span>
+                          <span
+                            class="deleteT"
+                            @click="deleteItem(item)"
+                          ></span>
+                        </li>
+                      </transition-group>
+                    </div>
 
-                      <div v-if="completed.length > 0 && showComplete">
-                        <p class="status">
-                          Завершенные задачи:
-                        </p>
-                        <transition-group
-                          name="todo-item"
-                          tag="ul"
-                          class="todo-list archived"
-                        >
-                          <li v-for="item in completed" v-bind:key="item.title">
-                            <input
-                              class="todo-checkbox"
-                              v-bind:id="'item_' + item.id"
-                              v-model="item.done"
-                              type="checkbox"
-                            />
-                            <label v-bind:for="'item_' + item.id"></label>
-                            <span class="todo-text">{{ item.title }}</span>
-                            <span
-                              class="delete"
-                              @click="deleteItem(item)"
-                            ></span>
-                          </li>
-                        </transition-group>
+                    <transition name="slide-fade">
+                      <p class="status free" v-if="!pending.length">
+                        <img
+                          src="https://nourabusoud.github.io/vue-todo-list/images/beer_celebration.svg"
+                          alt="celebration"
+                        />Можно расслабиться! Дел больше нет.
+                      </p>
+                    </transition>
+
+                    <div v-if="completed.length > 0 && showComplete">
+                      <p class="status">
+                        Завершенные задачи:
+                      </p>
+                      <transition-group
+                        name="todo-item"
+                        tag="ul"
+                        class="todo-list archived"
+                      >
+                        <li v-for="item in completed" v-bind:key="item.title">
+                          <input
+                            class="todo-checkbox"
+                            v-bind:id="'item_' + item.id"
+                            v-model="item.done"
+                            type="checkbox"
+                          />
+                          <label v-bind:for="'item_' + item.id"></label>
+                          <span class="todo-text">{{ item.title }}</span>
+                          <span class="delete" @click="deleteItem(item)"></span>
+                        </li>
+                      </transition-group>
+                    </div>
+                    <div class="control-buttons">
+                      <div
+                        class="btnn btnn-secondary"
+                        v-if="completed.length > 0"
+                        @click="toggleShowComplete"
+                      >
+                        <span v-if="!showComplete">Показать</span
+                        ><span v-else>Скрыть</span>
+                        завершенные
                       </div>
-                      <div class="control-buttons">
-                        <div
-                          class="btnn btnn-secondary"
-                          v-if="completed.length > 0"
-                          @click="toggleShowComplete"
-                        >
-                          <span v-if="!showComplete">Показать</span
-                          ><span v-else>Скрыть</span>
-                          завершенные
-                        </div>
-                        <div
-                          class="btnn btnn-secondary"
-                          v-if="newList.length > 0"
-                          @click="clearAll"
-                        >
-                          Очистить все
-                        </div>
+                      <div
+                        class="btnn btnn-secondary"
+                        v-if="newList.length > 0"
+                        @click="clearAll"
+                      >
+                        Очистить все
                       </div>
-                    </section>
-                  </vue-draggable-resizable>
-                  <!-- End todo-->
-                  <vue-draggable-resizable :resizable="true" w="auto" h="auto"
-                    ><Important
-                  /></vue-draggable-resizable>
-                  <vue-draggable-resizable
-                    :resizable="true"
-                    w="auto"
-                    h="auto"
-                    :x="x"
-                    :on-drag="onDragCallback"
-                    ><Meeting
-                  /></vue-draggable-resizable>
-                </div>
+                    </div>
+                  </section>
+                </vue-draggable-resizable>
+                <!-- End todo-->
+                <vue-draggable-resizable
+                  parent
+                  :resizable="true"
+                  w="350"
+                  h="400"
+                  ><Important
+                /></vue-draggable-resizable>
+                <vue-draggable-resizable
+                  parent
+                  :resizable="true"
+                  w="350"
+                  h="400"
+                  :x="x"
+                  ><Meeting
+                /></vue-draggable-resizable>
               </div>
-            </b-col>
+            </div>
           </b-row>
         </b-col>
         <b-col sm="12" md="12" lg="12" xl="3" cols="12">
@@ -354,13 +353,13 @@ export default {
     },
     clearAll() {
       this.newList = [];
-    },
-    onDragCallback(x, y) {
-      console.log(this.x);
-      if (x > 100 && x < 400 && y > 100 && y < 400) {
-        return false;
-      }
     }
+    // onDragCallback(x, y) {
+    //   console.log(this.x);
+    //   if (x > 100 && x < 400 && y > 100 && y < 400) {
+    //     return false;
+    //   }
+    // }
   },
   computed: {
     tasksDonePercent() {
@@ -691,12 +690,18 @@ p {
 }
 
 .whiteboard {
-  display: flex;
-  flex-wrap: wrap;
+  background: white;
+  min-width: 1000px;
+  width: 100%;
+  min-height: 900px;
+  border-radius: 10px;
+  padding: 5px;
+
+  position: relative;
 }
 
 .vdr {
   border: none !important;
-  position: relative !important;
+  position: none !important;
 }
 </style>

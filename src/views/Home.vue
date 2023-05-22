@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar :meeting="meeting" />
     <div class="container-fluid" ref="content">
       <b-row class="d-sm-flex justify-content-sm-center">
         <b-col sm="9" cols="12">
@@ -125,7 +125,12 @@
             </b-row>
 
             <div>
-              <div class="whiteboard">
+              <vue-draggable-resizable
+                :draggable="false"
+                class="whiteboard"
+                w="auto"
+                h="auto"
+              >
                 <vue-draggable-resizable
                   parent
                   w="350"
@@ -252,9 +257,10 @@
                   w="350"
                   h="400"
                   :x="x"
+                  v-on:data="meeting"
                   ><Meeting
                 /></vue-draggable-resizable>
-              </div>
+              </vue-draggable-resizable>
             </div>
           </b-row>
         </b-col>
@@ -309,6 +315,7 @@ export default {
   data() {
     return {
       name: "Guest",
+      meeting: "meeting 24",
       tasksDone: 0,
       tasksTodo: 0,
       modules: [],
@@ -689,19 +696,19 @@ p {
   background: transparent;
 }
 
+.vdr {
+  border: none !important;
+  position: none !important;
+}
+
 .whiteboard {
   background: white;
-  min-width: 1000px;
-  width: 100%;
+  min-width: 1100px;
+  max-width: 1700px;
   min-height: 900px;
   border-radius: 10px;
   padding: 5px;
 
-  position: relative;
-}
-
-.vdr {
-  border: none !important;
-  position: none !important;
+  position: relative !important;
 }
 </style>

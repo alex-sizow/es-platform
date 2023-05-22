@@ -1,8 +1,19 @@
 <template>
-  <nav :class="{'navbar-bottom': position === 'bottom', 'navbar-left': position === 'left', }" class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav
+    :class="{
+      'navbar-bottom': position === 'bottom',
+      'navbar-left': position === 'left'
+    }"
+    class="navbar navbar-expand-lg navbar-light bg-light"
+  >
     <a class="navbar-brand" href="#">
-      <img src="@/assets/images/smoolife.png" alt="SMOOLIFE" style="width: 7em"
-    /></a>
+      <img
+        src="@/assets/images/smoolife.png"
+        alt="SMOOLIFE"
+        style="width: 7em"
+      />
+    </a>
+
     <button
       class="navbar-toggler"
       type="button"
@@ -29,9 +40,18 @@
           >
         </li>
       </ul>
-
+      <div>
+        <div class="widget mt-2">
+          Последнее событие: {{ pending2[pending2.length - 1].title }}
+        </div>
+      </div>
       <div class="navbar-nav justify-content-end mt-2">
-        <select name="" id="" v-model="position" v-on:change="changeStyle($event.target.value)">   
+        <select
+          name=""
+          id=""
+          v-model="position"
+          v-on:change="changeStyle($event.target.value)"
+        >
           <option value="top">Вверх</option>
           <option value="bottom">Низ</option>
           <option value="left" @click="changeStyle">Слева</option>
@@ -52,20 +72,56 @@ export default {
   name: "Navbar",
   data() {
     return {
-      position: 'top'
+      position: "top",
+      meetList: [],
+      object: {
+        name: "Alex",
+        surname: "Sizov",
+        age: 26
+      }
     };
   },
+
+  mounted() {
+    this.getMeet();
+  },
+  props: {
+    meeting: {
+      type: String
+    }
+  },
+  watch: {
+    localStorage: {
+      handler: function() {
+        this.meetList = localStorage.meet_list;
+      },
+      deep: true
+    }
+  },
+  computed: {
+    pending2: function() {
+      return this.meetList.filter(function(item2) {
+        return !item2.done;
+      });
+    },
+    actual: localStorage.meet_list
+  },
   methods: {
+    getMeet() {
+      if (localStorage.getItem("meet_list")) {
+        this.meetList = JSON.parse(localStorage.getItem("meet_list"));
+      }
+    },
     changeStyle(position) {
-      if (position === 'top') {
-        this.$parent.$refs.content.style.margin = '10px';
-        this.$parent.$refs.content.style.padding = '5px'
-      } else if (position === 'bottom') {
-        this.$parent.$refs.content.style.margin = '0 0 150px 0';
-        this.$parent.$refs.content.style.padding = '10px'
-      } else if (position === 'left') {
-        this.$parent.$refs.content.style.margin = '0 0 0 0'
-        this.$parent.$refs.content.style.padding = '0 0 0 190px'
+      if (position === "top") {
+        this.$parent.$refs.content.style.margin = "10px";
+        this.$parent.$refs.content.style.padding = "5px";
+      } else if (position === "bottom") {
+        this.$parent.$refs.content.style.margin = "0 0 150px 0";
+        this.$parent.$refs.content.style.padding = "10px";
+      } else if (position === "left") {
+        this.$parent.$refs.content.style.margin = "0 0 0 0";
+        this.$parent.$refs.content.style.padding = "0 0 0 190px";
       }
     }
   }
@@ -80,14 +136,16 @@ export default {
 }
 
 .navbar-bottom {
-
   position: fixed;
   bottom: 0;
   width: 100%;
-
 }
 
-.navbar-left { 
+.widget {
+  margin-right: 50px;
+}
+
+.navbar-left {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -104,5 +162,4 @@ export default {
     }
   }
 }
-
 </style>

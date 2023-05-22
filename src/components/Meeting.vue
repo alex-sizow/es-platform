@@ -94,7 +94,7 @@ export default {
   name: "Meeting",
   data() {
     return {
-      meetList: [],
+      meetList: [1, 2, 3],
       new_meet: "",
       showComplete: false
     };
@@ -106,6 +106,7 @@ export default {
     meetList: {
       handler: function(updatedList2) {
         localStorage.setItem("meet_list", JSON.stringify(updatedList2));
+        console.log(localStorage.meet_list);
       },
       deep: true
     }

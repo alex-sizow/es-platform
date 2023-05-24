@@ -135,9 +135,13 @@
                   parent
                   w="350"
                   h="400"
+                  :lock-aspect-ratio="true"
                   :max-height="400"
                   :resizable="true"
                   id="app"
+                  :snap="true"
+                  :snapTolerance="10"
+                  @refLineParams="getRefLineParams"
                 >
                   <section class="todo-wrapper mr-3 cont">
                     <h1 class="todo-title">
@@ -247,17 +251,27 @@
                 <vue-draggable-resizable
                   parent
                   :resizable="true"
+                  :lock-aspect-ratio="true"
                   w="350"
                   h="400"
+                  :snap="true"
+                  :snapTolerance="10"
+                  :isConflictCheck="true"
+                  @refLineParams="getRefLineParams"
                   ><Important
                 /></vue-draggable-resizable>
                 <vue-draggable-resizable
                   parent
                   :resizable="true"
+                  :lock-aspect-ratio="true"
                   w="350"
                   h="400"
                   :x="x"
                   v-on:data="meeting"
+                  :snap="true"
+                  :snapTolerance="10"
+                  :isConflictCheck="true"
+                  @refLineParams="getRefLineParams"
                   ><Meeting
                 /></vue-draggable-resizable>
               </vue-draggable-resizable>
@@ -296,8 +310,8 @@ import Navbar from "@/components/Navbar";
 import QuoteBar from "@/components/QuoteBar";
 import Schedule from "@/components/Schedule";
 import $ from "jquery";
-import VueDraggableResizable from "vue-draggable-resizable";
-import "vue-draggable-resizable/dist/VueDraggableResizable.css";
+import VueDraggableResizable from "vue-draggable-resizable-gorkys";
+import "vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css";
 require("@/assets/styles/particles.css");
 require("@/assets/styles/todo.css");
 
@@ -323,7 +337,9 @@ export default {
       new_item: "",
       sub: [],
       showComplete: false,
-      username: ""
+      username: "",
+      vLine: [],
+      hLine: []
     };
   },
   methods: {
@@ -360,6 +376,11 @@ export default {
     },
     clearAll() {
       this.newList = [];
+    },
+    getRefLineParams(params) {
+      const { vLine, hLine } = params;
+      this.vLine = vLine;
+      this.hLine = hLine;
     }
     // onDragCallback(x, y) {
     //   console.log(this.x);

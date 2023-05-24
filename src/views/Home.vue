@@ -135,7 +135,7 @@
                   parent
                   w="350"
                   h="400"
-                  :lock-aspect-ratio="true"
+                  :lock-aspect-ratio="false"
                   :max-height="400"
                   :resizable="true"
                   id="app"
@@ -251,7 +251,7 @@
                 <vue-draggable-resizable
                   parent
                   :resizable="true"
-                  :lock-aspect-ratio="true"
+                  :lock-aspect-ratio="false"
                   w="350"
                   h="400"
                   :snap="true"
@@ -263,7 +263,7 @@
                 <vue-draggable-resizable
                   parent
                   :resizable="true"
-                  :lock-aspect-ratio="true"
+                  :lock-aspect-ratio="false"
                   w="350"
                   h="400"
                   :x="x"

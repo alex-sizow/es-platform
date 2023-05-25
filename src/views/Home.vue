@@ -132,7 +132,7 @@
                 h="auto"
               >
                 <vue-draggable-resizable
-                  parent
+                  class="first"
                   w="350"
                   h="400"
                   :lock-aspect-ratio="false"
@@ -249,7 +249,7 @@
                 </vue-draggable-resizable>
                 <!-- End todo-->
                 <vue-draggable-resizable
-                  parent
+                  class="second"
                   :resizable="true"
                   :lock-aspect-ratio="false"
                   w="350"
@@ -261,7 +261,7 @@
                   ><Important
                 /></vue-draggable-resizable>
                 <vue-draggable-resizable
-                  parent
+                  class="third"
                   :resizable="true"
                   :lock-aspect-ratio="false"
                   w="350"
@@ -577,7 +577,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 html,
 body {
   height: 100%;
@@ -724,12 +724,24 @@ p {
 
 .whiteboard {
   background: white;
-  min-width: 1100px;
+  min-width: 1200px;
   max-width: 1700px;
   min-height: 900px;
   border-radius: 10px;
   padding: 5px;
 
   position: relative !important;
+  .first {
+    top: 400px;
+    left: 0px;
+  }
+  .second {
+    top: 0;
+    left: 400px;
+  }
+
+  .third {
+    top: 0;
+  }
 }
 </style>
